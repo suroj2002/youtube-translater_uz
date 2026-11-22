@@ -243,11 +243,13 @@
     const videoTitle = titleEl ? titleEl.textContent.trim() : document.title.replace(" - YouTube", "");
 
     const promise = (async () => {
+      const deviceId = await getDeviceId();
       const resp = await fetch(`${CONFIG.API_BASE_URL}/chunk`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Access-Key": state.accessKey,
+          "X-Device-Id": deviceId,
         },
         body: JSON.stringify({
           video_id: state.videoId,
@@ -429,6 +431,7 @@
     const videoTitle = titleEl ? titleEl.textContent.trim() : document.title.replace(" - YouTube", "");
 
     try {
+      const deviceId = await getDeviceId();
       const initBody = { video_id: videoId, video_title: videoTitle };
       if (transcript) initBody.transcript = transcript;
 
@@ -437,6 +440,7 @@
         headers: {
           "Content-Type": "application/json",
           "X-Access-Key": state.accessKey,
+          "X-Device-Id": deviceId,
         },
         body: JSON.stringify(initBody),
       });

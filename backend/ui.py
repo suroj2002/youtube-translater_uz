@@ -835,6 +835,7 @@ def render_dashboard_html(
                 <th>Parol</th>
                 <th>Muddat</th>
                 <th>VIP (bugun/limit)</th>
+                <th>Qurilma</th>
                 <th>Holat</th>
                 <th>Amallar</th>
               </tr>
@@ -1071,11 +1072,13 @@ def render_dashboard_html(
         const tr = document.createElement("tr");
         const exp = u.expires_at ? u.expires_at.slice(0, 10) : "Cheksiz";
         const vipText = u.allow_vip ? `Ha (${{u.vip_used_today}}/${{u.vip_daily_limit}})` : "Yo'q";
+        const devText = u.is_admin ? "Cheksiz" : (u.bound_device_id ? "Bog'langan" : "Bo'sh");
         const activeText = u.is_active ? "Faol" : "Bloklangan";
 
         tr.innerHTML = `
           <td><strong></strong></td>
           <td><code></code></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -1085,11 +1088,27 @@ def render_dashboard_html(
         tr.children[1].querySelector("code").textContent = u.access_key;
         tr.children[2].textContent = exp;
         tr.children[3].textContent = vipText;
-        tr.children[4].textContent = activeText;
-        tr.children[4].style.color = u.is_active ? "#047857" : "#b91c1c";
+        tr.children[4].textContent = devText;
+        tr.children[4].style.color = u.bound_device_id && !u.is_admin ? "#2563eb" : "#64748b";
+        tr.children[5].textContent = activeText;
+        tr.children[5].style.color = u.is_active ? "#047857" : "#b91c1c";
 
-        const actionsTd = tr.children[5];
+        const actionsTd = tr.children[6];
         if (!u.is_admin) {{
+          if (u.bound_device_id) {{
+            const resetDev = document.createElement("button");
+            resetDev.className = "btn-xs";
+            resetDev.textContent = "Qurilmani bo'shatish";
+            resetDev.onclick = async () => {{
+              await adminFetch("/admin/users/" + encodeURIComponent(u.access_key), {{
+                method: "PATCH",
+                headers: {{ "Content-Type": "application/json" }},
+                body: JSON.stringify({{ reset_device: true }})
+              }});
+              loadAdminData();
+            }};
+            actionsTd.append(resetDev);
+          }}
           const toggleActive = document.createElement("button");
           toggleActive.className = "btn-xs";
           toggleActive.textContent = u.is_active ? "Bloklash" : "Yoqish";

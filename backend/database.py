@@ -104,6 +104,10 @@ def init_db() -> None:
                 conn.execute(
                     "ALTER TABLE users ADD COLUMN is_admin INTEGER NOT NULL DEFAULT 0"
                 )
+            if "bound_device_id" not in existing_cols:
+                conn.execute(
+                    "ALTER TABLE users ADD COLUMN bound_device_id TEXT"
+                )
             conn.execute(
                 """
                 INSERT OR IGNORE INTO users (access_key, name, is_active, expires_at)
@@ -131,12 +135,31 @@ def get_user_by_key(access_key: str) -> sqlite3.Row | None:
     try:
         cursor = conn.execute(
             """
-            SELECT access_key, name, is_active, expires_at, allow_vip, vip_daily_limit, is_admin
+            SELECT access_key, name, is_active, expires_at, allow_vip, vip_daily_limit, is_admin, bound_device_id
             FROM users WHERE access_key = ?
             """,
             (access_key,),
         )
         return cursor.fetchone()
+    finally:
+        conn.close()
+
+
+def bind_user_device(access_key: str, device_id: str) -> bool:
+    """Bind access_key to device_id if unbound or already bound to the same device."""
+    conn = get_connection()
+    try:
+        with conn:
+            cur = conn.execute(
+                """
+                UPDATE users SET bound_device_id = ?
+                WHERE access_key = ?
+                  AND (bound_device_id IS NULL OR bound_device_id = '' OR bound_device_id = ?)
+                """,
+                (device_id, access_key, device_id),
+            )
+            conn.commit()
+            return cur.rowcount == 1
     finally:
         conn.close()
 
@@ -200,7 +223,7 @@ def list_all_users() -> list[dict]:
         rows = conn.execute(
             """
             SELECT u.access_key, u.name, u.is_active, u.expires_at,
-                   u.allow_vip, u.vip_daily_limit, u.is_admin,
+                   u.allow_vip, u.vip_daily_limit, u.is_admin, u.bound_device_id,
                    COALESCE(v.count, 0) AS vip_used_today
             FROM users u
             LEFT JOIN vip_usage v
@@ -245,6 +268,7 @@ def update_user_record(
     allow_vip: bool | None = None,
     vip_daily_limit: int | None = None,
     expires_at: str | None = "__KEEP__",
+    reset_device: bool = False,
 ) -> dict | None:
     """Update subscriber fields and return updated row or None if missing."""
     existing = get_user_by_key(access_key)
@@ -264,6 +288,8 @@ def update_user_record(
     if expires_at != "__KEEP__":
         fields.append("expires_at = ?")
         params.append(expires_at)
+    if reset_device:
+        fields.append("bound_device_id = NULL")
     if not fields:
         return dict(existing)
     params.append(access_key)

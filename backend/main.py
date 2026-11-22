@@ -17,6 +17,7 @@ import httpx
 from pydantic import BaseModel, Field
 
 from database import (
+    bind_user_device,
     change_access_key,
     create_user_record,
     delete_user_record,
@@ -201,10 +202,15 @@ def verify_access_key(
     x_access_key: str | None = Header(
         default=None,
         alias="X-Access-Key",
-        description="Foydalanuvchi kirish kaliti (masalan: ADMIN-1234)",
+        description="Foydalanuvchi kirish kaliti",
+    ),
+    x_device_id: str | None = Header(
+        default=None,
+        alias="X-Device-Id",
+        description="Extension qurilma identifikatori",
     ),
 ) -> dict:
-    """Validate X-Access-Key against active, non-expired records in users."""
+    """Validate X-Access-Key and enforce single-device binding for non-admin users."""
     key = (x_access_key or "").strip()
     if not key:
         raise HTTPException(status_code=401, detail=AUTH_ERROR_DETAIL)
@@ -213,12 +219,30 @@ def verify_access_key(
     if row is None or row["is_active"] == 0 or _is_expired(row["expires_at"]):
         raise HTTPException(status_code=401, detail=AUTH_ERROR_DETAIL)
 
+    is_admin = bool(row["is_admin"])
+    device_id = (x_device_id or "").strip()
+    bound_device = (row["bound_device_id"] or "").strip()
+
+    if not is_admin:
+        if bound_device:
+            if not device_id or device_id != bound_device:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Bu parol boshqa qurilmaga bog'langan. Admin bilan bog'laning",
+                )
+        elif device_id:
+            if not bind_user_device(key, device_id):
+                raise HTTPException(
+                    status_code=403,
+                    detail="Bu parol boshqa qurilmaga bog'langan. Admin bilan bog'laning",
+                )
+
     return {
         "access_key": row["access_key"],
         "name": row["name"],
         "allow_vip": bool(row["allow_vip"]),
         "vip_daily_limit": int(row["vip_daily_limit"] or 0),
-        "is_admin": bool(row["is_admin"]),
+        "is_admin": is_admin,
     }
 
 
@@ -538,6 +562,7 @@ class AdminUpdateUserRequest(BaseModel):
     allow_vip: bool | None = None
     vip_daily_limit: int | None = Field(default=None, ge=0, le=100000)
     days: int | None = Field(default=None, ge=0, le=3650)
+    reset_device: bool | None = None
 
 
 def _mask_secret(value: str) -> str:
@@ -636,6 +661,7 @@ def admin_update_user(
         allow_vip=payload.allow_vip,
         vip_daily_limit=payload.vip_daily_limit,
         expires_at=expires_at,
+        reset_device=bool(payload.reset_device),
     )
     if updated is None:
         raise HTTPException(status_code=404, detail="Foydalanuvchi topilmadi")

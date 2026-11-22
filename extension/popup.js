@@ -96,9 +96,13 @@ loginBtn.addEventListener("click", async () => {
   loginBtn.textContent = "Tekshirilmoqda...";
   setMsg(authMsg, "");
   try {
+    const deviceId = await getDeviceId();
     const resp = await fetch(`${CONFIG.API_BASE_URL}/check-key`, {
       method: "GET",
-      headers: { "X-Access-Key": key },
+      headers: {
+        "X-Access-Key": key,
+        "X-Device-Id": deviceId,
+      },
     });
     const data = await resp.json().catch(() => ({}));
     if (!resp.ok) {
@@ -179,11 +183,13 @@ saveNewKeyBtn.addEventListener("click", async () => {
   if (!saved.access_key) return;
   saveNewKeyBtn.disabled = true;
   try {
+    const deviceId = await getDeviceId();
     const resp = await fetch(`${CONFIG.API_BASE_URL}/change-key`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-Access-Key": saved.access_key,
+        "X-Device-Id": deviceId,
       },
       body: JSON.stringify({ new_key: newKey }),
     });
@@ -212,8 +218,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderLoggedIn(saved);
   // Har ochilganda serverdan VIP va parol holatini yangilab olish
   try {
+    const deviceId = await getDeviceId();
     const resp = await fetch(`${CONFIG.API_BASE_URL}/check-key`, {
-      headers: { "X-Access-Key": saved.access_key },
+      headers: {
+        "X-Access-Key": saved.access_key,
+        "X-Device-Id": deviceId,
+      },
     });
     if (resp.ok) {
       const data = await resp.json();
@@ -222,10 +232,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         elevenlabs_enabled: Boolean(data.elevenlabs_enabled),
       });
       renderLoggedIn(await chrome.storage.local.get(null));
-    } else if (resp.status === 401) {
+    } else if (resp.status === 401 || resp.status === 403) {
+      const errData = await resp.json().catch(() => ({}));
       await chrome.storage.local.remove(["access_key", "user_name", "elevenlabs_enabled"]);
       renderLoggedOut();
-      setMsg(authMsg, "Parol muddati tugagan yoki bloklangan", true);
+      setMsg(authMsg, errData.detail || "Parol muddati tugagan yoki bloklangan", true);
     }
   } catch {
     // Server vaqtincha o'chiq bo'lsa lokal holatni saqlab turamiz
