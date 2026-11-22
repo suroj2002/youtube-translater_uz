@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube O‘zbekcha Sinxron Tarjimon — Portfolio Karusel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+
+    /* Smooth slide transitions */
+    .carousel-track {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Subtle pulse for active audio indicator */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      70% { transform: scale(1.35); opacity: 0; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .animate-pulse-ring::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background-color: #10B981;
+      animation: pulse-ring 2s infinite;
+    }
+
+    /* Custom subtle scrollbar for mobile */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-3 sm:p-6 md:p-10 selection:bg-sky-100 selection:text-sky-900">
+
+  <!-- Main Portfolio Carousel Wrapper (Link Hub Modal/Card Style) -->
+  <main class="w-full max-w-5xl bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+
+    <!-- Top Header Bar -->
+    <header class="flex items-center justify-between px-5 sm:px-8 py-4 border-b border-slate-200 bg-white">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 font-bold text-sm">
+          UZ
+        </div>
+        <div>
+          <h2 class="text-sm sm:text-base font-semibold text-slate-900 leading-tight">
+            YouTube O‘zbekcha Sinxron Tarjimon
+          </h2>
+          <p class="text-xs text-slate-500">Case Study &amp; Texnik Taqdimot</p>
+        </div>
+      </div>
+
+      <!-- Slide Counter Pill -->
+      <div class="flex items-center gap-2">
+        <span id="slide-badge" class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+          1 / 6 slayd
+        </span>
+      </div>
+    </header>
+
+    <!-- Carousel Viewport -->
+    <div id="carousel-viewport" class="relative w-full overflow-hidden bg-white">
+      <div id="carousel-track" class="carousel-track flex w-full">
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 1: MUQOVA (YOUTUBE ICON + VIDEO ORQA FON)           -->
+        <!-- ========================================================= -->
+        <section class="relative w-full flex-shrink-0 p-5 sm:p-8 md:p-12 flex items-center overflow-hidden min-h-[480px]">
+          
+          <!-- Orqa fondagi xiralashtirilgan YouTube video kartochkalari (Visual Backdrop) -->
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden select-none opacity-45">
+            <!-- Yumshoq oq gradient qoplama (matn aniq o'qilishi uchun) -->
+            <div class="absolute inset-0 bg-gradient-to-b from-white/95 via-white/80 to-white/95 z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-transparent to-white/90 z-10"></div>
+
+            <!-- Orqa fon video panjarasi -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6 -rotate-3 scale-105">
+              <!-- Video card 1 -->
+              <div class="rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 p-3 flex flex-col justify-between relative overflow-hidden">
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">14:28</span>
+                  <div class="space-y-1">
+                    <div class="h-1.5 w-3/4 bg-amber-400/80 rounded"></div>
+                    <div class="h-1.5 w-1/2 bg-white/50 rounded"></div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-300"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-4/5 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-1/2 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video card 2 -->
+              <div class="rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-sky-900 to-slate-900 p-3 flex flex-col justify-between relative overflow-hidden">
+                  <span class="self-start px-2 py-0.5 rounded-full bg-emerald-500/90 text-[9px] text-white font-semibold">UZ Dublyaj</span>
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">28:05</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-sky-200"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-3/4 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-2/5 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video card 3 -->
+              <div class="hidden sm:block rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-indigo-950 to-slate-900 p-3 flex flex-col justify-between">
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">09:42</span>
+                  <div class="h-1.5 w-2/3 bg-sky-400/70 rounded"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-300"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-5/6 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-1/2 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video card 4 -->
+              <div class="rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-slate-900 to-zinc-800 p-3 flex flex-col justify-between">
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">42:10</span>
+                  <div class="h-1.5 w-3/5 bg-white/40 rounded"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-300"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-2/3 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-1/3 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video card 5 -->
+              <div class="rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-rose-950 to-slate-900 p-3 flex flex-col justify-between">
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">19:15</span>
+                  <div class="h-1.5 w-4/5 bg-rose-400/60 rounded"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-300"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-3/4 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-1/2 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video card 6 -->
+              <div class="hidden sm:block rounded-2xl border border-slate-200 bg-slate-100/80 p-3 space-y-2.5">
+                <div class="aspect-video rounded-xl bg-gradient-to-br from-emerald-950 to-slate-900 p-3 flex flex-col justify-between">
+                  <span class="self-end px-2 py-0.5 rounded bg-black/70 text-[10px] text-white font-mono">11:50</span>
+                  <div class="h-1.5 w-1/2 bg-emerald-400/70 rounded"></div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-300"></div>
+                  <div class="space-y-1 flex-1">
+                    <div class="h-2 w-4/5 bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-2/5 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Markaziy asosiy kontent (Hero) -->
+          <div class="relative z-20 w-full max-w-3xl mx-auto text-center space-y-6">
+            
+            <!-- YouTube Icon + UZ Audio Badge -->
+            <div class="inline-flex flex-col items-center gap-3">
+              <div class="relative inline-flex items-center justify-center w-20 h-14 sm:w-24 sm:h-16 rounded-2xl bg-red-600 shadow-lg shadow-red-600/25 ring-4 ring-white">
+                <!-- YouTube Play Triangle -->
+                <svg class="w-9 h-9 sm:w-10 sm:h-10 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                <!-- O'zbekcha ovoz belgisi -->
+                <span class="absolute -bottom-2.5 -right-3 px-2.5 py-0.5 rounded-full bg-sky-600 text-white text-[11px] font-bold shadow-sm border-2 border-white">
+                  🇺🇿 UZ Ovoz
+                </span>
+              </div>
+
+              <span class="text-[11px] font-semibold tracking-wider uppercase text-slate-500 bg-white/90 px-3 py-1 rounded-full border border-slate-200">
+                01 / LOYIHA HAQIDA • CHROME EXTENSION + AI DUBLYAJ
+              </span>
+            </div>
+
+            <!-- Aniq va tushunarli sarlavha -->
+            <div class="space-y-3">
+              <h1 class="text-2xl sm:text-4xl md:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.15]">
+                YouTube videolarini real vaqtda <span class="text-sky-600">o‘zbek tilida</span> sinxron eshiting
+              </h1>
+              <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Ingliz va rus tilidagi har qanday video darslik, podkast yoki ma’ruzani YouTube’dan chiqmasdan, <strong>1 ta tugma</strong> orqali jonli o‘zbekcha ovozda (dublyajda) tomosha qiling.
+              </p>
+            </div>
+
+            <!-- 3 ta asosiy afzallik kartochkasi -->
+            <div class="grid grid-cols-3 gap-2.5 sm:gap-4 max-w-xl mx-auto pt-1">
+              <div class="p-3 sm:p-4 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs">
+                <div class="text-lg sm:text-2xl font-bold text-slate-900">~5 soniya</div>
+                <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Tezkor start</div>
+              </div>
+              <div class="p-3 sm:p-4 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs">
+                <div class="text-lg sm:text-2xl font-bold text-sky-600">100% Sinxron</div>
+                <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Pause / Seek mos</div>
+              </div>
+              <div class="p-3 sm:p-4 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs">
+                <div class="text-lg sm:text-2xl font-bold text-emerald-600">AI Ovozlar</div>
+                <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Sardor, Madina &amp; VIP</div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 2: QANDAY ISHLATILADI? (3 ODDIY QADAM)              -->
+        <!-- ========================================================= -->
+        <section class="w-full flex-shrink-0 p-5 sm:p-8 md:p-10 flex items-center">
+          <div class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="space-y-1.5">
+              <span class="text-xs font-semibold tracking-wider uppercase text-sky-600">
+                02 / FOYDALANISH TARTIBI
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                Qanday ishlatiladi? — 3 oddiy qadam
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600">
+                Hech qanday video yuklash yoki murakkab dasturlarsiz, to‘g‘ridan-to‘g‘ri YouTube sahifasining o‘zida ishlaydi.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Qadam 1 -->
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div class="w-8 h-8 rounded-xl bg-sky-600 text-white font-bold text-sm flex items-center justify-center">1</div>
+                <h3 class="text-base font-bold text-slate-900">Parol orqali faollashtirish</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Kengaytma oynasini ochib, shaxsiy <strong>Access Key</strong> parolni bir marta kiritasiz va u brauzerda saqlanadi.
+                </p>
+              </div>
+
+              <!-- Qadam 2 -->
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div class="w-8 h-8 rounded-xl bg-sky-600 text-white font-bold text-sm flex items-center justify-center">2</div>
+                <h3 class="text-base font-bold text-slate-900">Ovoz va miksherni tanlash</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  <strong>Madina</strong>, <strong>Sardor</strong> yoki <strong>VIP</strong> ovozni tanlaysiz hamda asl video ovozini fon sifatida (masalan, 10%) sozlaysiz.
+                </p>
+              </div>
+
+              <!-- Qadam 3 -->
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">3</div>
+                <h3 class="text-base font-bold text-slate-900">1 tugma bilan sinxron ijro</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  YouTube pleyeridagi <strong>«UZ Tarjima»</strong> tugmasini bosasiz — video to‘xtatilsa yoki oldinga surilsa, ovoz ham birga yuradi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 3: TEZLIK ARXITEKTURASI (CHUNKING & PREFETCH)       -->
+        <!-- ========================================================= -->
+        <section class="w-full flex-shrink-0 p-5 sm:p-8 md:p-10 flex items-center">
+          <div class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="space-y-1.5">
+              <span class="text-xs font-semibold tracking-wider uppercase text-sky-600">
+                03 / TEZLIK ARXITEKTURASI
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                60 soniyalik bo‘laklash (Chunking) va Prefetching
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600">
+                1 soatlik videoni boshidan oxirigacha kutib o‘tirmasdan, 5–8 soniya ichida tomoshani boshlash texnologiyasi.
+              </p>
+            </div>
+
+            <!-- Timeline Visual -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1">
+                  <div class="flex items-center justify-between text-xs font-bold text-emerald-800">
+                    <span>0-bo‘lak (00:00 – 01:00)</span>
+                    <span>▶ Ijroda</span>
+                  </div>
+                  <p class="text-[11px] text-emerald-700">5 soniyada tayyor bo‘ladi va darhol eshittirila boshlaydi.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-sky-50 border border-sky-200 space-y-1">
+                  <div class="flex items-center justify-between text-xs font-bold text-sky-800">
+                    <span>1-bo‘lak (01:00 – 02:00)</span>
+                    <span>⚡ Prefetch</span>
+                  </div>
+                  <p class="text-[11px] text-sky-700">Siz 1-daqiqani ko‘rayotganingizda orqa fonda yuklab qo‘yiladi.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-1">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                    <span>N-bo‘lak (Seek)</span>
+                    <span>🎯 On-demand</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600">Videoni 25-daqiqaga sursangiz, faqat o‘sha qism tarjima qilinadi.</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200 text-xs text-slate-600">
+                <span>• Gap o‘rtasidan kesilmaydi (mantiqiy pauzalardan bo‘linadi)</span>
+                <span class="font-semibold text-emerald-700">API xarajati 80%+ tejaladi</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 4: TEXNOLOGIYALAR STEKI                             -->
+        <!-- ========================================================= -->
+        <section class="w-full flex-shrink-0 p-5 sm:p-8 md:p-10 flex items-center">
+          <div class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="space-y-1.5">
+              <span class="text-xs font-semibold tracking-wider uppercase text-sky-600">
+                04 / TEXNOLOGIYALAR STEKI
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                Loyihada qo‘llanilgan texnologiyalar
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600">
+                Yuqori tezlik, aniq kontekstli tarjima va minimal server yuki uchun tanlangan zamonaviy stek.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-sky-600 uppercase">Frontend</div>
+                <div class="text-sm font-bold text-slate-900">Chrome Extension (MV3)</div>
+                <p class="text-xs text-slate-600">Vanilla JS, HTML5 Audio Sync va Chrome Storage API.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-emerald-600 uppercase">Backend API</div>
+                <div class="text-sm font-bold text-slate-900">Python + FastAPI</div>
+                <p class="text-xs text-slate-600">Asinxron REST API, Access Key himoyasi va bo‘laklar boshqaruvi.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-indigo-600 uppercase">AI Tarjima</div>
+                <div class="text-sm font-bold text-slate-900">Gemini 3.5 Flash Lite</div>
+                <p class="text-xs text-slate-600">Video sarlavhasi va oldingi gaplar konteksti asosida tabiiy tarjima.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-rose-600 uppercase">Ovozlashtirish (TTS)</div>
+                <div class="text-sm font-bold text-slate-900">Edge-TTS &amp; ElevenLabs</div>
+                <p class="text-xs text-slate-600">Sardor/Madina neyron ovozlari hamda VIP foydalanuvchilar uchun ElevenLabs.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-amber-600 uppercase">Audio Montaj</div>
+                <div class="text-sm font-bold text-slate-900">FFmpeg &amp; Pydub</div>
+                <p class="text-xs text-slate-600">Auto-pacing (atempo) orqali o‘zbekcha gapni video vaqtiga aniq sig‘dirish.</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-slate-600 uppercase">Baza &amp; Kesh</div>
+                <div class="text-sm font-bold text-slate-900">SQLite &amp; Cloudflare R2</div>
+                <p class="text-xs text-slate-600">Foydalanuvchilar nazorati va tayyor MP3 audiolarni bulutda keshlash.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 5: XAVFSIZLIK VA KESH TIZIMI                        -->
+        <!-- ========================================================= -->
+        <section class="w-full flex-shrink-0 p-5 sm:p-8 md:p-10 flex items-center">
+          <div class="w-full max-w-4xl mx-auto space-y-6">
+            <div class="space-y-1.5">
+              <span class="text-xs font-semibold tracking-wider uppercase text-sky-600">
+                05 / XAVFSIZLIK VA OPTIMIZATSIYA
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                Yopiq kirish nazorati va 0.1 soniyalik Kesh
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600">
+                API balansini himoyalash va takroriy so‘rovlarni xarajatsiz uzatish mexanizmi.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Xavfsizlik kartochkasi -->
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
+                  🔐 Access Key &amp; VIP Nazorati
+                </div>
+                <h3 class="text-base font-bold text-slate-900">Faqat ruxsat berilgan foydalanuvchilar</h3>
+                <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <li>• Har bir foydalanuvchiga alohida parol va amal qilish muddati beriladi.</li>
+                  <li>• Pullik ElevenLabs ovozi faqat admin ruxsat bergan VIP foydalanuvchilarga ochiladi.</li>
+                  <li>• CLI skript orqali istalgan parolni bir soniyada bloklash mumkin.</li>
+                </ul>
+              </div>
+
+              <!-- Kesh kartochkasi -->
+              <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+                  ⚡ Markazlashgan Audio Kesh
+                </div>
+                <h3 class="text-base font-bold text-slate-900">Ikkinchi foydalanuvchi uchun 0 so‘m</h3>
+                <ul class="text-xs text-slate-600 space-y-2 leading-relaxed">
+                  <li>• Bir marta tarjima qilingan MP3 bo‘lak Cloudflare R2 / keshda saqlanadi.</li>
+                  <li>• Xuddi shu videoni boshqa odam ochganda AI qayta ishlamaydi — <strong>0.1 soniyada</strong> tayyor audio uzatiladi.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- SLIDE 6: NATIJA, DEMO VA BOG'LANISH (FINAL CTA)           -->
+        <!-- ========================================================= -->
+        <section class="w-full flex-shrink-0 p-5 sm:p-8 md:p-10 flex items-center">
+          <div class="w-full max-w-4xl mx-auto rounded-3xl bg-slate-50/90 border border-slate-200 p-6 sm:p-8 md:p-10 space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+              <div class="space-y-2 max-w-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold tracking-wider uppercase">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  06 / NATIJA VA HAMKORLIK
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                  Tayyor, sinovdan o‘tgan <span class="text-sky-600">real mahsulot</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Loyiha to‘liq ishga tushirilgan va yopiq foydalanuvchilar guruhida barqaror ishlamoqda. Shunga o‘xshash AI integratsiyalar, Chrome kengaytmalari yoki tezkor backend tizimlar bo‘yicha hamkorlikka tayyorman.
+                </p>
+              </div>
+
+              <!-- Status Card -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-1.5 flex-shrink-0">
+                <div class="text-[11px] font-medium text-slate-500">Loyiha holati</div>
+                <div class="flex items-center gap-2 text-sm font-bold text-emerald-700">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Production / Ishchi holatda
+                </div>
+                <div class="text-[11px] text-slate-500">v2.0 • Chunking + R2 Cache</div>
+              </div>
+            </div>
+
+            <!-- Key Takeaways Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-slate-900">Real muammo yechimi</div>
+                <p class="text-xs text-slate-600">Til to‘sig‘ini olib tashlovchi kundalik foydali vosita.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-slate-900">Optimizatsiya qilingan xarajat</div>
+                <p class="text-xs text-slate-600">Bo‘laklab uzatish va kesh orqali minimal server yuki.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                <div class="text-xs font-bold text-slate-900">To‘liq nazorat</div>
+                <p class="text-xs text-slate-600">Access Key, VIP rollar va avtomatik vaqt moslashuvi.</p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+              <div class="flex flex-wrap items-center gap-3">
+                <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-semibold transition shadow-xs">
+                  <span>Loyiha bo‘yicha bog‘lanish</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+                <button id="restart-carousel-btn" type="button" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>Boshidan ko‘rish</span>
+                </button>
+              </div>
+
+              <span class="text-xs text-slate-400">
+                ← → klaviatura yoki swipe bilan boshqaring
+              </span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Footer -->
+    <footer class="flex items-center justify-between px-5 sm:px-8 py-4 border-t border-slate-200 bg-slate-50/60">
+      <!-- Previous Button -->
+      <button id="prev-btn" type="button" aria-label="Oldingi slayd"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-2xs">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span class="hidden sm:inline">Oldingi</span>
+      </button>
+
+      <!-- Slide Dots Indicator -->
+      <div id="dots-container" class="flex items-center gap-2" role="tablist" aria-label="Slaydlar navigatsiyasi">
+        <!-- Generated dynamically via JS -->
+      </div>
+
+      <!-- Next Button -->
+      <button id="next-btn" type="button" aria-label="Keyingi slayd"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-2xs">
+        <span class="hidden sm:inline">Keyingi</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      const track = document.getElementById('carousel-track');
+      const slides = Array.from(track.children);
+      const totalSlides = slides.length;
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const dotsContainer = document.getElementById('dots-container');
+      const slideBadge = document.getElementById('slide-badge');
+      const viewport = document.getElementById('carousel-viewport');
+
+      // Default holatda 1-slayd (index 0) ochiladi
+      let currentIndex = 0;
+
+      // Create navigation dots
+      slides.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `${idx + 1}-slaydga o‘tish`);
+        dot.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer';
+        dot.addEventListener('click', () => goToSlide(idx));
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = Array.from(dotsContainer.children);
+
+      function updateUI() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideBadge.textContent = `${currentIndex + 1} / ${totalSlides} slayd`;
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === totalSlides - 1;
+
+        dots.forEach((dot, idx) => {
+          if (idx === currentIndex) {
+            dot.classList.remove('w-2', 'bg-slate-300', 'hover:bg-slate-400');
+            dot.classList.add('w-7', 'bg-sky-600');
+          } else {
+            dot.classList.remove('w-7', 'bg-sky-600');
+            dot.classList.add('w-2', 'bg-slate-300', 'hover:bg-slate-400');
+          }
+        });
+      }
+
+      function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentIndex = index;
+        updateUI();
+      }
+
+      prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+      nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+      const restartBtn = document.getElementById('restart-carousel-btn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', () => goToSlide(0));
+      }
+
+      // Keyboard arrow navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+        if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
+      });
+
+      // Touch swipe support for mobile devices
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      viewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) goToSlide(currentIndex + 1);
+          else goToSlide(currentIndex - 1);
+        }
+      }, { passive: true });
+
+      // Interactive Screenshot Upload for Slide 1
+      const fileInput = document.getElementById('slide1-screenshot-input');
+      const previewImg = document.getElementById('slide1-preview-img');
+      const defaultMockup = document.getElementById('slide1-default-mockup');
+      const resetBtn = document.getElementById('slide1-reset-btn');
+
+      if (fileInput && previewImg && defaultMockup && resetBtn) {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            previewImg.src = event.target.result;
+            previewImg.classList.remove('hidden');
+            defaultMockup.classList.add('hidden');
+            resetBtn.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        });
+
+        resetBtn.addEventListener('click', () => {
+          fileInput.value = '';
+          previewImg.src = '';
+          previewImg.classList.add('hidden');
+          defaultMockup.classList.remove('hidden');
+          resetBtn.classList.add('hidden');
+        });
+      }
+
+      // Initialize
+      updateUI();
+    })();
+  </script>
+</body>
+</html>

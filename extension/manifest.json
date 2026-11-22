@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube O'zbekcha Tarjimon",
+  "version": "2.0.0",
+  "description": "YouTube videolarini o'zbek tiliga dublyaj qiluvchi shaxsiy kengaytma.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "https://www.youtube.com/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YouTube O'zbekcha Tarjimon"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["page_bridge.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["config.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

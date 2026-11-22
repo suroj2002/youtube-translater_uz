@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube O'zbekcha Tarjimon</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="head">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>YouTube UZ Tarjimon</span>
+      </div>
+      <span id="statusPill" class="pill pill-muted">Kirilmagan</span>
+    </header>
+
+    <section id="authCard" class="card">
+      <label class="label" for="accessKeyInput">Kirish paroli (Access Key)</label>
+      <div class="pw-row">
+        <input id="accessKeyInput" class="input" type="password" placeholder="Kirish parolini kiriting" />
+        <button id="togglePwBtn" type="button" class="eye-btn" title="Parolni ko'rsatish / yashirish" aria-label="Parolni ko'rsatish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <button id="loginBtn" type="button" class="btn btn-primary">Kirish va tekshirish</button>
+      <div id="authMsg" class="msg"></div>
+    </section>
+
+    <section id="controlsCard" class="card hidden">
+      <div class="user-bar">
+        <div>
+          <div class="user-label">Foydalanuvchi</div>
+          <div id="userNameText" class="user-name">-</div>
+        </div>
+        <button id="logoutBtn" type="button" class="btn-link">Chiqish</button>
+      </div>
+
+      <div class="block">
+        <label class="label" for="voiceSelect">Dublyaj ovozi</label>
+        <select id="voiceSelect" class="input">
+          <option value="sardor">Sardor (Erkak — bepul)</option>
+          <option value="madina">Madina (Ayol — bepul)</option>
+          <option value="elevenlabs" id="vipOption">ElevenLabs (VIP)</option>
+        </select>
+        <div id="vipHint" class="hint"></div>
+      </div>
+
+      <div class="block">
+        <div class="slider-head">
+          <label class="label" for="origVolSlider">Asl video ovozi</label>
+          <span id="origVolVal" class="val-badge">15%</span>
+        </div>
+        <input id="origVolSlider" class="slider" type="range" min="0" max="100" value="15" />
+      </div>
+
+      <div class="block">
+        <div class="slider-head">
+          <label class="label" for="transVolSlider">Tarjima ovozi</label>
+          <span id="transVolVal" class="val-badge">100%</span>
+        </div>
+        <input id="transVolSlider" class="slider" type="range" min="0" max="100" value="100" />
+      </div>
+
+      <button id="toggleTranslateBtn" type="button" class="btn btn-success">Tarjimani yoqish</button>
+      <div id="ctrlMsg" class="msg"></div>
+
+      <div class="pw-change-wrap">
+        <button id="showChangePwBtn" type="button" class="btn-link-muted">Parolni o'zgartirish ▾</button>
+        <div id="changePwBox" class="hidden" style="margin-top:8px;">
+          <div class="pw-row" style="margin-bottom:6px;">
+            <input id="newKeyInput" class="input" type="password" placeholder="Yangi parol (kamida 6 belgi)" />
+            <button id="toggleNewPwBtn" type="button" class="eye-btn" title="Ko'rsatish / yashirish" aria-label="Yangi parolni ko'rsatish">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <button id="saveNewKeyBtn" type="button" class="btn btn-primary" style="padding:8px 10px; font-size:12.5px;">Yangi parolni saqlash</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

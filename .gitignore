@@ -1,0 +1,14 @@
+.env
+**/.env
+*.db
+*.sqlite
+*.sqlite3
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+audio_cache/
+**/audio_cache/
+.vscode/
+*.zip
