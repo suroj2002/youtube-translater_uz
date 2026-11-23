@@ -18,6 +18,25 @@
 
   state.audio.preload = "auto";
 
+  function apiPost(path, body, headers) {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(
+        { type: "API_FETCH", method: "POST", path, body, headers },
+        (response) => {
+          if (chrome.runtime.lastError) {
+            reject(new Error(chrome.runtime.lastError.message));
+            return;
+          }
+          if (!response) {
+            reject(new Error("Background xizmatidan javob kelmadi"));
+            return;
+          }
+          resolve(response);
+        }
+      );
+    });
+  }
+
   // --- UI: YouTube player ustidagi kichik boshqaruv tugmasi ---
   let pillEl = null;
   let pillTextEl = null;
@@ -244,23 +263,23 @@
 
     const promise = (async () => {
       const deviceId = await getDeviceId();
-      const resp = await fetch(`${CONFIG.API_BASE_URL}/chunk`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Access-Key": state.accessKey,
-          "X-Device-Id": deviceId,
-        },
-        body: JSON.stringify({
+      const res = await apiPost(
+        "/chunk",
+        {
           video_id: state.videoId,
           chunk_index: chunkIndex,
           voice: state.voice,
           video_title: videoTitle,
-        }),
-      });
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) {
-        throw new Error(data.detail || `Xatolik (${resp.status})`);
+        },
+        {
+          "Content-Type": "application/json",
+          "X-Access-Key": state.accessKey,
+          "X-Device-Id": deviceId,
+        }
+      );
+      const data = res.data || {};
+      if (!res.ok) {
+        throw new Error(data.detail || res.error || `Xatolik (${res.status})`);
       }
       state.audioUrls.set(chunkIndex, data.audio_url);
       return data.audio_url;
@@ -435,18 +454,14 @@
       const initBody = { video_id: videoId, video_title: videoTitle };
       if (transcript) initBody.transcript = transcript;
 
-      const resp = await fetch(`${CONFIG.API_BASE_URL}/init`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Access-Key": state.accessKey,
-          "X-Device-Id": deviceId,
-        },
-        body: JSON.stringify(initBody),
+      const res = await apiPost("/init", initBody, {
+        "Content-Type": "application/json",
+        "X-Access-Key": state.accessKey,
+        "X-Device-Id": deviceId,
       });
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) {
-        throw new Error(data.detail || `Init xatosi (${resp.status})`);
+      const data = res.data || {};
+      if (!res.ok) {
+        throw new Error(data.detail || res.error || `Init xatosi (${res.status})`);
       }
 
       if (!state.active || state.videoId !== videoId) return;
