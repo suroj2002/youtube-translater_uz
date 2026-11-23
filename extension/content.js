@@ -128,7 +128,7 @@
       const timer = setTimeout(() => {
         window.removeEventListener("message", onMsg);
         resolve(null);
-      }, 4000);
+      }, 6500);
 
       function onMsg(event) {
         if (
